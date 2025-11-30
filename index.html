@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La Palabra Justa – Prototipo</title>
+
+<style>
+    body{font-family:Arial;text-align:center;background:#faf6ff;}
+    h1{font-size:30px;margin-top:10px;}
+    .card{font-size:55px;font-weight:900;padding:30px;border-radius:15px;width:250px;
+         margin:auto;margin-top:20px;background:#8b5cff;color:white;}
+    .consigna{font-size:22px;margin-top:15px;background:#ffe76c;padding:15px;border-radius:10px;}
+    button{padding:12px 22px;font-size:17px;margin:6px;border:none;border-radius:10px;
+           background:#6639f6;color:#fff;font-weight:bold;cursor:pointer;}
+    button:hover{opacity:0.85;}
+    #jugadores{margin-top:25px;}
+    input{padding:6px;font-size:15px;}
+    .jugador{margin:6px;font-size:18px;}
+</style>
+</head>
+
+<body>
+
+<h1>🎲 La Palabra Justa – Prototipo Digital</h1>
+
+<div class="card" id="letra"></div>
+<div class="consigna" id="consigna"></div>
+
+<button onclick="nuevaRonda()">Nueva Ronda</button>
+
+<hr><h2>🟢 Jugadores y Puntos</h2>
+
+<input id="nombre" placeholder="Nombre del jugador">
+<button onclick="agregarJugador()">Agregar</button>
+
+<div id="jugadores"></div>
+
+<script>
+const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+const consignas = [
+    "Debe tener más de 5 letras","Debe ser un animal","Debe ser un objeto",
+    "Debe ser una comida","Debe contener R","Debe ser plural",
+    "Debe tener doble letra","Debe tener dos sílabas","Debe ser un lugar",
+    "Debe empezar con consonante","Debe ser un verbo","Debe ser un color",
+    "Debe tener al menos 3 vocales","Palabra ligada a la escuela",
+    "Objeto tecnológico","Algo del cuerpo humano","Algo que se encuentra afuera",
+    "Algo que se compra","Algo que se regala","Algo que se usa para trabajar",
+    "Contiene N y A","Solo femenino","Relacionado al deporte",
+    "Relacionado al agua","Algo peligroso","Un sentimiento",
+    "Con tilde","Algo frío","Algo caliente","Algo que huele fuerte",
+    "Algo redondo","Algo blando","Palabra divertida",
+    "Algo que se rompe","Algo que hace ruido","Algo muy chiquito",
+    "Algo muy grande","Algo que se mide","Algo con sabor dulce",
+    "Algo que se encuentra en casa"
+];
+
+let jugadores = [];
+
+function nuevaRonda(){
+    // genera letras jugables (distintas o iguales)
+    let l1 = letras[Math.floor(Math.random()*letras.length)];
+    let l2 = letras[Math.floor(Math.random()*letras.length)];
+    document.getElementById("letra").innerText = `${l1} — ${l2}`;
+
+    // consigna aleatoria
+    document.getElementById("consigna").innerHTML = consignas[Math.floor(Math.random()*consignas.length)];
+}
+
+function agregarJugador(){
+    let nombre = document.getElementById("nombre").value;
+    if(nombre.trim()==="") return;
+
+    jugadores.push({nombre,puntos:0});
+    document.getElementById("nombre").value="";
+    render();
+}
+
+function sumar(i){
+    jugadores[i].puntos++;
+    render();
+}
+
+function render(){
+    let html="";
+    jugadores.forEach((j,i)=>{
+        html+=`<div class="jugador"> ${j.nombre} — <b>${j.puntos}</b> 
+        <button onclick="sumar(${i})">+1</button></div>`;
+    });
+    document.getElementById("jugadores").innerHTML=html;
+}
+
+// iniciar primera ronda
+nuevaRonda();
+</script>
+
+</body>
+</html>
