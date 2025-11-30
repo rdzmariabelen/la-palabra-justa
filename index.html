@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>La Palabra Justa – Versión Estable</title>
+<title>La Palabra Justa – Mazo Fácil</title>
 
 <style>
     body{font-family:Arial;text-align:center;background:#faf6ff;}
@@ -22,7 +22,7 @@
 
 <body>
 
-<h1>🎲 La Palabra Justa</h1>
+<h1>🎲 La Palabra Justa – Modo Fácil</h1>
 
 <div class="card" id="letra"></div>
 <div class="consigna" id="consigna"></div>
@@ -39,30 +39,68 @@
 <script>
 // Letras válidas para iniciar palabras
 const inicio = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+// Finales reales en español (no Q, W, X, K, J, etc)
+const final = "AEIOUNSRLD";
 
-// Letras válidas para terminar palabras (español real)
-const final = "AEIOUNSRLD";  // ← finales seguras y naturales
-
-// Consignas equilibradas (40)
+// NUEVO — 40 CONSIGNAS FÁCILES Y JUGABLES
 const consignas = [
-    "Debe tener más de 5 letras","Debe ser un animal","Debe ser un objeto",
-    "Debe ser una comida","Debe contener R","Debe ser plural",
-    "Debe tener doble letra","Debe tener dos sílabas","Debe ser un lugar",
-    "Debe ser un verbo","Debe ser un color","Debe tener al menos 3 vocales",
-    "Relacionado con deporte","Relacionado con el agua","Objeto tecnológico",
-    "Debe ser adjetivo","Algo que se encuentra en casa","Algo muy grande",
-    "Algo muy pequeño","Algo que se compra","Algo que hace ruido",
-    "Algo que huele fuerte","Algo redondo","Algo que se usa con la mano",
-    "Debe contener S y R","Debe comenzar y terminar con vocal",
-    "Debe ser algo natural","Debe ser algo artificial","Algo peligroso",
-    "Algo dulce","Algo salado","Palabra divertida","Nombre propio correcto",
-    "Algo frío","Algo caliente","Algo del cuerpo humano",
-    "Objeto escolar","Animal marino","Elemento de cocina","Una planta"
+    // Cosas cotidianas
+    "Algo que se encuentra en una casa",
+    "Algo que se puede tocar",
+    "Algo que se puede comprar",
+    "Algo que se usa en la cocina",
+    "Algo que hay en el baño",
+    "Algo que hay en una escuela",
+    "Algo que usa una persona",
+    "Algo que puede ser un regalo",
+    "Algo que puede romperse",
+    "Algo que entra en una mochila",
+
+    // Seres vivos (siempre hay opciones)
+    "Un animal",
+    "Un animal doméstico o salvaje",
+    "Una planta, árbol o flor",
+    "Algo que vive en la tierra o el agua",
+    "Un ser vivo (cualquiera)",
+
+    // Propiedades simples
+    "Algo grande",
+    "Algo pequeño",
+    "Algo redondo",
+    "Algo blando o duro",
+    "Algo que puede tener color",
+    "Algo con forma (cuadrado, circular, largo…)",
+    "Algo que hace ruido",
+    "Algo que se mueve o puede moverse",
+
+    // Conceptos amplios
+    "Una emoción o sentimiento",
+    "Una acción (verbo)",
+    "Algo que se puede pensar o imaginar",
+    "Algo que se pueda ver o escuchar",
+    "Algo relacionado al tiempo (día, año, calor…)",
+
+    // Comida
+    "Algo que se come",
+    "Algo que se bebe",
+    "Un alimento dulce o salado",
+    "Algo que se guarda en la heladera",
+
+    // Lugares y espacios
+    "Un lugar",
+    "Algo que se encuentra afuera",
+    "Algo que se encuentra adentro",
+    "Un sitio donde hay personas",
+
+    // Simples lingüísticas
+    "Debe tener al menos 4 letras",
+    "Debe empezar con vocal",
+    "Debe terminar en vocal",
+    "Debe ser una palabra común y conocida"
 ];
 
 let jugadores = [];
 
-// Nueva ronda con combinaciones correctas
 function nuevaRonda(){
     const l1 = inicio[Math.floor(Math.random()*inicio.length)];
     const l2 = final[Math.floor(Math.random()*final.length)];
@@ -71,7 +109,6 @@ function nuevaRonda(){
         consignas[Math.floor(Math.random()*consignas.length)];
 }
 
-// Sistema de jugadores
 function agregarJugador(){
     let nombre = document.getElementById("nombre").value;
     if(!nombre.trim()) return;
@@ -94,7 +131,7 @@ function render(){
     document.getElementById("jugadores").innerHTML=html;
 }
 
-// Cargar primera ronda
+// Iniciar juego
 nuevaRonda();
 </script>
 
