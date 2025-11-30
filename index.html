@@ -1,4 +1,43 @@
-// 40 combinaciones fáciles y comunes en español
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La Palabra Justa – Versión 40 combos fáciles</title>
+
+<style>
+    body{font-family:Arial;text-align:center;background:#faf6ff;}
+    h1{font-size:32px;margin-top:10px;font-weight:900;color:#5b30ff;}
+    .card{font-size:60px;font-weight:900;padding:30px;border-radius:15px;width:280px;
+         margin:25px auto;background:#7a4fff;color:white;}
+    .consigna{font-size:22px;margin-top:15px;background:#ffe66d;padding:15px;border-radius:12px;
+              width:70%;margin:auto;font-weight:600;}
+    button{padding:12px 26px;font-size:18px;margin:8px;border:none;border-radius:10px;
+           background:#6739f6;color:#fff;font-weight:bold;cursor:pointer;}
+    button:hover{opacity:0.85;}
+    input{padding:7px;font-size:15px;border-radius:6px;border:1px solid #bbb;}
+    #jugadores{margin-top:22px;}
+    .jugador{margin:8px;font-size:19px;font-weight:600;}
+</style>
+</head>
+
+<body>
+
+<h1>🎲 La Palabra Justa — Mazo 40 combinaciones fáciles</h1>
+
+<div class="card" id="letra"></div>
+<div class="consigna" id="consigna"></div>
+
+<button onclick="nuevaRonda()">🔄 Nueva Ronda</button>
+
+<hr><h2>🟢 Jugadores y puntos</h2>
+
+<input id="nombre" placeholder="Nombre del jugador">
+<button onclick="agregarJugador()">Agregar jugador</button>
+
+<div id="jugadores"></div>
+
+<script>
+/* 🔥 40 combinaciones muy fáciles y comunes en español */
 const combos = [
   "A-A","A-E","A-O","A-S","A-R","A-N",
   "B-A","B-E","B-O","B-R",
@@ -11,6 +50,26 @@ const combos = [
   "S-A","S-O","S-E"
 ];
 
+/* Consignas ultragenéricas para que siempre haya respuesta */
+const consignas = [
+    "Que tenga 3 letras","Que tenga 4 letras","Que tenga 5 letras",
+    "Que tenga 6 letras o más","Que sea palabra corta","Que sea palabra larga",
+    "Que tenga al menos 2 vocales","Que tenga 3 vocales","Que tenga una sola vocal",
+    "Que tenga 2 consonantes","Que tenga más vocales que consonantes",
+    "Que tenga más consonantes que vocales","Que tenga una A","Que tenga una E",
+    "Que tenga una O","Que no tenga A","Que no tenga E","Que no tenga O",
+    "Que tenga dos vocales seguidas","Que tenga dos consonantes seguidas",
+    "Que tenga una letra repetida","Que empiece con consonante",
+    "Que sea sustantivo","Que sea verbo","Que sea adjetivo","Que sea plural",
+    "Que no sea plural","Que pueda llevar —ito/ita","Que pueda llevar —ote/ota",
+    "Que pueda ser un nombre","Que sea palabra conocida","Que no sea inventada",
+    "Que tenga una letra rara (B,V,Z,H…)","Que pueda usarse como objeto",
+    "Que pueda usarse como acción","Que tenga mínimo 4 letras",
+    "Que sea muy común","Que termine en vocal","Que sea fácil de decir",
+    "Que sea simplemente UNA PALABRA 😂"
+];
+
+/* 💥 Genera una nueva ronda */
 function nuevaRonda(){
     const par = combos[Math.floor(Math.random()*combos.length)];
     const [l1,l2] = par.split("-");
@@ -18,3 +77,35 @@ function nuevaRonda(){
     document.getElementById("consigna").innerText =
         consignas[Math.floor(Math.random()*consignas.length)];
 }
+
+/* Sistema de jugadores */
+let jugadores = [];
+
+function agregarJugador(){
+    let nombre = document.getElementById("nombre").value;
+    if(!nombre.trim()) return;
+    jugadores.push({nombre,puntos:0});
+    document.getElementById("nombre").value="";
+    render();
+}
+
+function sumar(i){
+    jugadores[i].puntos++;
+    render();
+}
+
+function render(){
+    let html="";
+    jugadores.forEach((j,i)=>{
+        html+=`<div class="jugador">${j.nombre} — <b>${j.puntos}</b>
+        <button onclick="sumar(${i})">+1</button></div>`;
+    });
+    document.getElementById("jugadores").innerHTML=html;
+}
+
+/* Primera ronda automática */
+nuevaRonda();
+</script>
+
+</body>
+</html>
