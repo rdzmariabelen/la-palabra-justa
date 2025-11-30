@@ -6,64 +6,74 @@
 
 <style>
     body{font-family:Arial;text-align:center;background:#faf6ff;}
-    h1{font-size:30px;margin-top:10px;}
-    .card{font-size:55px;font-weight:900;padding:30px;border-radius:15px;width:250px;
-         margin:auto;margin-top:20px;background:#8b5cff;color:white;}
-    .consigna{font-size:22px;margin-top:15px;background:#ffe76c;padding:15px;border-radius:10px;}
-    button{padding:12px 22px;font-size:17px;margin:6px;border:none;border-radius:10px;
+    h1{font-size:30px;margin-top:10px;font-weight:900;color:#5a33ff;}
+    .card{font-size:60px;font-weight:900;padding:30px;border-radius:15px;width:270px;
+         margin:auto;margin-top:25px;background:#8257ff;color:white;}
+    .consigna{font-size:22px;margin-top:18px;background:#ffe76c;padding:15px;border-radius:12px;
+              width:70%;margin-left:auto;margin-right:auto;font-weight:600;}
+    button{padding:12px 26px;font-size:18px;margin:8px;border:none;border-radius:10px;
            background:#6639f6;color:#fff;font-weight:bold;cursor:pointer;}
     button:hover{opacity:0.85;}
-    #jugadores{margin-top:25px;}
-    input{padding:6px;font-size:15px;}
-    .jugador{margin:6px;font-size:18px;}
+    input{padding:7px;font-size:15px;border-radius:6px;border:1px solid #bbb;}
+    #jugadores{margin-top:20px;}
+    .jugador{margin:8px;font-size:19px;font-weight:600;}
 </style>
 </head>
 
 <body>
 
-<h1>🎲 La Palabra Justa – Prototipo Digital</h1>
+<h1>🎲 La Palabra Justa</h1>
 
 <div class="card" id="letra"></div>
 <div class="consigna" id="consigna"></div>
 
-<button onclick="nuevaRonda()">Nueva Ronda</button>
+<button onclick="nuevaRonda()">🔄 Nueva Ronda</button>
 
-<hr><h2>🟢 Jugadores y Puntos</h2>
+<hr><h2>🟢 Jugadores y puntos</h2>
 
 <input id="nombre" placeholder="Nombre del jugador">
-<button onclick="agregarJugador()">Agregar</button>
+<button onclick="agregarJugador()">Agregar jugador</button>
 
 <div id="jugadores"></div>
 
 <script>
-const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+// Letras posibles de INICIO (todas OK en español)
+const letrasInicio = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+
+// Letras posibles de FINAL (las que sí pueden terminar palabra en español)
+const letrasFin = "AEIOUNRSLDYZ";
+
+// 40 consignas ya balanceadas
 const consignas = [
     "Debe tener más de 5 letras","Debe ser un animal","Debe ser un objeto",
     "Debe ser una comida","Debe contener R","Debe ser plural",
     "Debe tener doble letra","Debe tener dos sílabas","Debe ser un lugar",
     "Debe empezar con consonante","Debe ser un verbo","Debe ser un color",
-    "Debe tener al menos 3 vocales","Palabra ligada a la escuela",
-    "Objeto tecnológico","Algo del cuerpo humano","Algo que se encuentra afuera",
-    "Algo que se compra","Algo que se regala","Algo que se usa para trabajar",
-    "Contiene N y A","Solo femenino","Relacionado al deporte",
-    "Relacionado al agua","Algo peligroso","Un sentimiento",
-    "Con tilde","Algo frío","Algo caliente","Algo que huele fuerte",
-    "Algo redondo","Algo blando","Palabra divertida",
-    "Algo que se rompe","Algo que hace ruido","Algo muy chiquito",
-    "Algo muy grande","Algo que se mide","Algo con sabor dulce",
-    "Algo que se encuentra en casa"
+    "Debe tener al menos 3 vocales","Algo relacionado a la escuela",
+    "Objeto tecnológico","Algo del cuerpo humano","Palabra relacionada al agua",
+    "Algo que se compra","Algo que se regala","Algo que hace ruido",
+    "Relacionado con deporte","Relacionado con trabajo","Algo peligroso",
+    "Un sentimiento","Debe tener T y R","Debe terminar en vocal",
+    "Debe ser un material","Un objeto redondo","Algo que se rompe",
+    "Algo que se usa con la mano","Algo muy pequeño","Algo muy grande",
+    "Un adjetivo","Algo con sabor dulce","Algo que huele fuerte",
+    "Algo que se encuentra en casa","Algo con movimiento",
+    "Debe contener dos consonantes seguidas","Debe ser cosa natural",
+    "Debe ser cosa artificial"
 ];
 
 let jugadores = [];
 
+// Generador principal
 function nuevaRonda(){
-    // genera letras jugables (distintas o iguales)
-    let l1 = letras[Math.floor(Math.random()*letras.length)];
-    let l2 = letras[Math.floor(Math.random()*letras.length)];
-    document.getElementById("letra").innerText = `${l1} — ${l2}`;
+    // Letra inicial: cualquiera
+    let l1 = letrasInicio[Math.floor(Math.random() * letrasInicio.length)];
+    // Letra final: solo letras que realmente finalizan palabras
+    let l2 = letrasFin[Math.floor(Math.random() * letrasFin.length)];
 
-    // consigna aleatoria
-    document.getElementById("consigna").innerHTML = consignas[Math.floor(Math.random()*consignas.length)];
+    document.getElementById("letra").innerText = `${l1} — ${l2}`;
+    document.getElementById("consigna").innerHTML =
+        consignas[Math.floor(Math.random() * consignas.length)];
 }
 
 function agregarJugador(){
@@ -83,7 +93,7 @@ function sumar(i){
 function render(){
     let html="";
     jugadores.forEach((j,i)=>{
-        html+=`<div class="jugador"> ${j.nombre} — <b>${j.puntos}</b> 
+        html+=`<div class="jugador">${j.nombre} — <b>${j.puntos}</b> 
         <button onclick="sumar(${i})">+1</button></div>`;
     });
     document.getElementById("jugadores").innerHTML=html;
