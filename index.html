@@ -1,142 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>La Palabra Justa – Modo Genérico</title>
-
-<style>
-    body{font-family:Arial;text-align:center;background:#faf6ff;}
-    h1{font-size:32px;margin-top:10px;font-weight:900;color:#5b30ff;}
-    .card{font-size:60px;font-weight:900;padding:30px;border-radius:15px;width:280px;
-         margin:25px auto;background:#7a4fff;color:white;}
-    .consigna{font-size:22px;margin-top:15px;background:#ffe66d;padding:15px;border-radius:12px;
-              width:70%;margin:auto;font-weight:600;}
-    button{padding:12px 26px;font-size:18px;margin:8px;border:none;border-radius:10px;
-           background:#6739f6;color:#fff;font-weight:bold;cursor:pointer;}
-    button:hover{opacity:0.85;}
-    input{padding:7px;font-size:15px;border-radius:6px;border:1px solid #bbb;}
-    #jugadores{margin-top:22px;}
-    .jugador{margin:8px;font-size:19px;font-weight:600;}
-</style>
-</head>
-
-<body>
-
-<h1>🎲 La Palabra Justa — Modo Genérico</h1>
-
-<div class="card" id="letra"></div>
-<div class="consigna" id="consigna"></div>
-
-<button onclick="nuevaRonda()">🔄 Nueva Ronda</button>
-
-<hr><h2>🟢 Jugadores y puntos</h2>
-
-<input id="nombre" placeholder="Nombre del jugador">
-<button onclick="agregarJugador()">Agregar jugador</button>
-
-<div id="jugadores"></div>
-
-<script>
-// Letras válidas para inicio
-const inicio = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-
-// Final seguro y jugable (filtrado)
-const final = "AEOSNR"; // finales más comunes y útiles
-
-// 🔥 40 CONSIGNAS GENÉRICAS — SIEMPRE POSIBLES 🔥
-const consignas = [
-
-    // Longitud → siempre resolvible
-    "Que tenga 3 letras",
-    "Que tenga 4 letras",
-    "Que tenga 5 letras",
-    "Que tenga 6 letras o más",
-    "Que tenga entre 3 y 6 letras",
-    "Que tenga más de 4 letras",
-    "Que tenga más de 6 letras",
-    "Que sea una palabra corta",
-    "Que sea una palabra larga",
-    "Que tenga una sola sílaba",
-
-    // Vocales
-    "Que tenga 2 vocales",
-    "Que tenga 3 vocales",
-    "Que tenga más vocales que consonantes",
-    "Que contenga una A",
-    "Que contenga una E",
-    "Que contenga una O",
-    "Que tenga una vocal repetida",
-    "Que tenga dos vocales juntas",
-    "Que tenga una sola vocal",
-    "Que termine en vocal",
-
-    // Consonantes
-    "Que tenga una doble consonante",
-    "Que tenga al menos 3 consonantes",
-    "Que empiece con consonante",
-    "Que tenga consonantes repetidas",
-    "Que contenga una S",
-    "Que contenga una R",
-    "Que no tenga R",
-    "Que no tenga S",
-    "Que tenga una letra poco común (B, V, Z, H…)",
-    "Que tenga dos consonantes seguidas",
-
-    // Partes gramaticales
-    "Que sea un sustantivo",
-    "Que sea un verbo",
-    "Que sea un adjetivo",
-    "Que sea plural",
-    "Que no sea plural",
-    "Que pueda tener diminutivo en -ito/-ita",
-    "Que pueda tener aumentativo en -ote/-ota",
-    "Que se pueda convertir en verbo agregando -ar/-er/-ir",
-    "Que pueda usarse como nombre de algo",
-    "Que sea una palabra real y conocida"
+// 40 combinaciones fáciles y comunes en español
+const combos = [
+  "A-A","A-E","A-O","A-S","A-R","A-N",
+  "B-A","B-E","B-O","B-R",
+  "C-A","C-E","C-O","C-S","C-R","C-N",
+  "D-A","D-O","D-E","D-S",
+  "L-A","L-O","L-E","L-S",
+  "M-A","M-O","M-E","M-S",
+  "P-A","P-O","P-E","P-R","P-S",
+  "R-A","R-O","R-E","R-S",
+  "S-A","S-O","S-E"
 ];
 
-let jugadores = [];
-
-// 🎯 GENERA COMBINACION + CONSIGNA SIEMPRE USABLE
 function nuevaRonda(){
-    let par = "";
-    do {
-        const l1 = inicio[Math.floor(Math.random()*inicio.length)];
-        const l2 = final[Math.floor(Math.random()*final.length)];
-        par = `${l1} — ${l2}`;
-    } while(false); // acá integraríamos filtros más adelante
-
-    document.getElementById("letra").innerText = par;
+    const par = combos[Math.floor(Math.random()*combos.length)];
+    const [l1,l2] = par.split("-");
+    document.getElementById("letra").innerText = `${l1} — ${l2}`;
     document.getElementById("consigna").innerText =
         consignas[Math.floor(Math.random()*consignas.length)];
 }
-
-// Sistema de jugadores
-function agregarJugador(){
-    let nombre = document.getElementById("nombre").value;
-    if(!nombre.trim()) return;
-    jugadores.push({nombre,puntos:0});
-    document.getElementById("nombre").value="";
-    render();
-}
-
-function sumar(i){
-    jugadores[i].puntos++;
-    render();
-}
-
-function render(){
-    let html="";
-    jugadores.forEach((j,i)=>{
-        html+=`<div class="jugador">${j.nombre} — <b>${j.puntos}</b>
-        <button onclick="sumar(${i})">+1</button></div>`;
-    });
-    document.getElementById("jugadores").innerHTML=html;
-}
-
-// Primera ronda automática
-nuevaRonda();
-</script>
-
-</body>
-</html>
