@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>La Palabra Justa – Mazo Fácil</title>
+<title>La Palabra Justa – Modo Genérico</title>
 
 <style>
     body{font-family:Arial;text-align:center;background:#faf6ff;}
@@ -22,7 +22,7 @@
 
 <body>
 
-<h1>🎲 La Palabra Justa – Modo Fácil</h1>
+<h1>🎲 La Palabra Justa — Modo Genérico</h1>
 
 <div class="card" id="letra"></div>
 <div class="consigna" id="consigna"></div>
@@ -37,94 +37,5 @@
 <div id="jugadores"></div>
 
 <script>
-// Letras válidas para iniciar palabras
-const inicio = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-// Finales reales en español (no Q, W, X, K, J, etc)
-const final = "AEIOUNSRLD";
-
-// NUEVO — 40 CONSIGNAS FÁCILES Y JUGABLES
-const consignas = [
-    // Cosas cotidianas
-    "Algo que se encuentra en una casa",
-    "Algo que se puede tocar",
-    "Algo que se puede comprar",
-    "Algo que se usa en la cocina",
-    "Algo que hay en el baño",
-    "Algo que hay en una escuela",
-    "Algo que usa una persona",
-    "Algo que puede ser un regalo",
-    "Algo que puede romperse",
-    "Algo que entra en una mochila",
-
-    // Seres vivos (siempre hay opciones)
-    "Un animal",
-    "Un animal doméstico o salvaje",
-    "Una planta, árbol o flor",
-    "Algo que vive en la tierra o el agua",
-    "Un ser vivo (cualquiera)",
-
-
-    // Conceptos amplios
-    "Una emoción o sentimiento",
-    "Una acción (verbo)",
-    "Algo que se puede pensar o imaginar",
-    "Algo que se pueda ver o escuchar",
-    "Algo relacionado al tiempo (día, año, calor…)",
-
-    // Comida
-    "Algo que se come",
-    "Algo que se bebe",
-    "Un alimento dulce o salado",
-    "Algo que se guarda en la heladera",
-
-    // Lugares y espacios
-    "Un lugar",
-    "Algo que se encuentra afuera",
-    "Algo que se encuentra adentro",
-    "Un sitio donde hay personas",
-
-    // Simples lingüísticas
-    "Debe tener al menos 4 letras",
-    "Debe ser una palabra común y conocida"
-    "Nombre propio"
-    
-];
-
-let jugadores = [];
-
-function nuevaRonda(){
-    const l1 = inicio[Math.floor(Math.random()*inicio.length)];
-    const l2 = final[Math.floor(Math.random()*final.length)];
-    document.getElementById("letra").innerText = `${l1} — ${l2}`;
-    document.getElementById("consigna").innerText =
-        consignas[Math.floor(Math.random()*consignas.length)];
-}
-
-function agregarJugador(){
-    let nombre = document.getElementById("nombre").value;
-    if(!nombre.trim()) return;
-    jugadores.push({nombre,puntos:0});
-    document.getElementById("nombre").value="";
-    render();
-}
-
-function sumar(i){
-    jugadores[i].puntos++;
-    render();
-}
-
-function render(){
-    let html="";
-    jugadores.forEach((j,i)=>{
-        html+=`<div class="jugador">${j.nombre} — <b>${j.puntos}</b> 
-        <button onclick="sumar(${i})">+1</button></div>`;
-    });
-    document.getElementById("jugadores").innerHTML=html;
-}
-
-// Iniciar juego
-nuevaRonda();
-</script>
-
-</body>
-</html>
+// Letras válidas para inicio
+const in
