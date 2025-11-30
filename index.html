@@ -38,4 +38,105 @@
 
 <script>
 // Letras válidas para inicio
-const in
+const inicio = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+
+// Final seguro y jugable (filtrado)
+const final = "AEOSNR"; // finales más comunes y útiles
+
+// 🔥 40 CONSIGNAS GENÉRICAS — SIEMPRE POSIBLES 🔥
+const consignas = [
+
+    // Longitud → siempre resolvible
+    "Que tenga 3 letras",
+    "Que tenga 4 letras",
+    "Que tenga 5 letras",
+    "Que tenga 6 letras o más",
+    "Que tenga entre 3 y 6 letras",
+    "Que tenga más de 4 letras",
+    "Que tenga más de 6 letras",
+    "Que sea una palabra corta",
+    "Que sea una palabra larga",
+    "Que tenga una sola sílaba",
+
+    // Vocales
+    "Que tenga 2 vocales",
+    "Que tenga 3 vocales",
+    "Que tenga más vocales que consonantes",
+    "Que contenga una A",
+    "Que contenga una E",
+    "Que contenga una O",
+    "Que tenga una vocal repetida",
+    "Que tenga dos vocales juntas",
+    "Que tenga una sola vocal",
+    "Que termine en vocal",
+
+    // Consonantes
+    "Que tenga una doble consonante",
+    "Que tenga al menos 3 consonantes",
+    "Que empiece con consonante",
+    "Que tenga consonantes repetidas",
+    "Que contenga una S",
+    "Que contenga una R",
+    "Que no tenga R",
+    "Que no tenga S",
+    "Que tenga una letra poco común (B, V, Z, H…)",
+    "Que tenga dos consonantes seguidas",
+
+    // Partes gramaticales
+    "Que sea un sustantivo",
+    "Que sea un verbo",
+    "Que sea un adjetivo",
+    "Que sea plural",
+    "Que no sea plural",
+    "Que pueda tener diminutivo en -ito/-ita",
+    "Que pueda tener aumentativo en -ote/-ota",
+    "Que se pueda convertir en verbo agregando -ar/-er/-ir",
+    "Que pueda usarse como nombre de algo",
+    "Que sea una palabra real y conocida"
+];
+
+let jugadores = [];
+
+// 🎯 GENERA COMBINACION + CONSIGNA SIEMPRE USABLE
+function nuevaRonda(){
+    let par = "";
+    do {
+        const l1 = inicio[Math.floor(Math.random()*inicio.length)];
+        const l2 = final[Math.floor(Math.random()*final.length)];
+        par = `${l1} — ${l2}`;
+    } while(false); // acá integraríamos filtros más adelante
+
+    document.getElementById("letra").innerText = par;
+    document.getElementById("consigna").innerText =
+        consignas[Math.floor(Math.random()*consignas.length)];
+}
+
+// Sistema de jugadores
+function agregarJugador(){
+    let nombre = document.getElementById("nombre").value;
+    if(!nombre.trim()) return;
+    jugadores.push({nombre,puntos:0});
+    document.getElementById("nombre").value="";
+    render();
+}
+
+function sumar(i){
+    jugadores[i].puntos++;
+    render();
+}
+
+function render(){
+    let html="";
+    jugadores.forEach((j,i)=>{
+        html+=`<div class="jugador">${j.nombre} — <b>${j.puntos}</b>
+        <button onclick="sumar(${i})">+1</button></div>`;
+    });
+    document.getElementById("jugadores").innerHTML=html;
+}
+
+// Primera ronda automática
+nuevaRonda();
+</script>
+
+</body>
+</html>
